@@ -27,7 +27,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (Auth::user()->name=='admin'){
+        if (Auth::user()->role=='admin'){
             $tickets=Tickets::paginate(10);
 
         }

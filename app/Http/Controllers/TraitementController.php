@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Tickets;
 class TraitementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','Isadmin']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

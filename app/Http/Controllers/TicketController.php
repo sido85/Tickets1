@@ -11,18 +11,13 @@ use Session;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('Isadmin')->only('consulter');
+    }
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -58,52 +53,11 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $ticket=Tickets::findOrFail($id);
-        return view('ticket.show',compact('ticket'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public  function consulter($id){
+        public  function consulter($id){
         $ticket=Tickets::findOrFail($id);
         $ticket->etat='en cours';
         $ticket->save();
-        return redirect('ticket/'.$id.'/show');
+
+        return view('ticket.show',compact('ticket'));
     }
-
-
 }
